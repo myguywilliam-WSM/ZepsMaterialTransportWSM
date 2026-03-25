@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep's Material Transport | Kingston, NY</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Oswald:wght@400;500;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --red: #c8232a;
+    --red-bright: #e8272f;
+    --white: #f5f0e8;
+    --gray: #1a1a1a;
+    --gray-mid: #2a2a2a;
+    --gray-light: #888;
+    --accent: #d4a017;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200,35,42,0.3);
+  }
+
+  .nav-logo {
+    font-family: 'Black Ops One', cursive;
+    font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+
+  .nav-logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  .nav-cta {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--red-bright); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+    opacity: 0.28;
+  }
+
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(10,10,10,0.95) 40%, rgba(10,10,10,0.5) 100%),
+      radial-gradient(ellipse at 70% 50%, rgba(200,35,42,0.1) 0%, transparent 60%);
+  }
+
+  .hero-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .hero h1 {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 .red { color: var(--red); }
+
+  .hero-sub {
+    margin-top: 32px;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--gray-light);
+    max-width: 480px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-services {
+    margin-top: 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-actions {
+    margin-top: 48px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    padding: 18px 40px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: var(--red-bright);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 18px 40px;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .hero-phone {
+    position: absolute;
+    right: 40px;
+    bottom: 60px;
+    text-align: right;
+    z-index: 1;
+  }
+
+  .hero-phone .label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin-bottom: 6px;
+  }
+
+  .hero-phone a {
+    font-family: 'Black Ops One', cursive;
+    font-size: 1.8rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .hero-phone a:hover { color: var(--red); }
+
+  /* SERVICES TICKER */
+  .ticker {
+    background: var(--red);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    gap: 0;
+    animation: ticker 22s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .ticker-item::after {
+    content: '—';
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .section-title {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 48px;
+  }
+
+  /* SERVICES GRID */
+  .services { background: var(--gray); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .service-card {
+    background: var(--black);
+    padding: 40px 32px;
+    border-top: 3px solid transparent;
+    transition: border-color 0.25s, background 0.25s;
+    cursor: default;
+  }
+
+  .service-card:hover {
+    border-color: var(--red);
+    background: var(--gray-mid);
+  }
+
+  .service-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .service-card.featured .card-text {
+    padding: 40px 32px;
+  }
+
+  .service-card.featured img {
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-card h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+    color: var(--gray-light);
+    line-height: 1.6;
+  }
+
+  /* TRUCK BANNER DIVIDER */
+  .truck-banner-divider {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    position: relative;
+  }
+
+  .truck-banner-divider img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .truck-banner-divider::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.25) 0%, transparent 30%, transparent 70%, rgba(10,10,10,0.25) 100%);
+  }
+
+  /* MATERIALS */
+  .materials { background: var(--black); }
+
+  .materials-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .materials-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .material-item {
+    background: var(--gray);
+    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: background 0.2s;
+  }
+
+  .material-item:hover { background: var(--gray-mid); }
+
+  .material-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .material-item span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  /* GALLERY / WORK SECTION */
+  .our-work {
+    background: var(--gray);
+    padding: 100px 40px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 48px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+
+  .gallery-item.tall {
+    grid-row: span 2;
+    aspect-ratio: auto;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: brightness(0.85);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.04);
+    filter: brightness(1);
+  }
+
+  /* TERRITORY */
+  .territory {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .territory-text .section-title { margin-bottom: 24px; }
+
+  .territory-text p {
+    font-size: 1rem;
+    color: var(--gray-light);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .territory-counties {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .county {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .county::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .territory-visual {
+    background: var(--gray);
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    position: relative;
+    border: 1px solid rgba(200,35,42,0.2);
+  }
+
+  .territory-big {
+    font-family: 'Black Ops One', cursive;
+    font-size: 4.5rem;
+    line-height: 1;
+    color: rgba(200,35,42,0.15);
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  .territory-phone-big {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .territory-phone-big .label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin-bottom: 8px;
+  }
+
+  .territory-phone-big a {
+    font-family: 'Black Ops One', cursive;
+    font-size: 1.6rem;
+    color: var(--red);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  .territory-phone-big a:hover { color: var(--red-bright); }
+
+  /* DUMP RUNS CALLOUT */
+  .dump-callout {
+    background: var(--red);
+    padding: 80px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dump-callout::before {
+    content: 'DUMP RUNS';
+    position: absolute;
+    font-family: 'Black Ops One', cursive;
+    font-size: 18vw;
+    color: rgba(0,0,0,0.12);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .dump-starburst {
+    position: absolute;
+    top: 24px;
+    right: 48px;
+    width: 130px;
+    height: auto;
+    z-index: 2;
+    animation: spin-star 16s linear infinite;
+    transform-origin: center;
+  }
+
+  @keyframes spin-star {
+    0%   { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(180deg) scale(1.06); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  .dump-callout h2 {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--white);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dump-callout p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.85);
+    max-width: 500px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dump-callout .btn-white {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+    background: var(--white);
+    padding: 18px 40px;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.15s;
+  }
+
+  .dump-callout .btn-white:hover { transform: translateY(-2px); }
+
+  /* CONTACT */
+  .contact { background: var(--black); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 48px;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+
+  .contact-item .label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .contact-item a,
+  .contact-item p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-item a:hover { color: var(--red); }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form select {
+    background: var(--gray);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    padding: 16px 20px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus,
+  .contact-form select:focus {
+    border-color: var(--red);
+  }
+
+  .contact-form select option { background: var(--gray); }
+
+  .contact-form textarea { min-height: 120px; resize: vertical; }
+
+  .contact-form button {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    border: none;
+    padding: 18px 40px;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+
+  .contact-form button:hover { background: var(--red-bright); }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray);
+    border-top: 1px solid rgba(200,35,42,0.3);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Black Ops One', cursive;
+    font-size: 1rem;
+    color: var(--white);
+  }
+
+  .footer-logo span { color: var(--red); }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--gray-light);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-ig a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-ig a:hover { color: var(--red); }
+
+  /* LIGHTBOX */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0,0,0,0.93);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+
+  .lightbox-overlay.active {
+    display: flex;
+  }
+
+  .lightbox-img-wrap {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-overlay img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    display: block;
+    border: 1px solid rgba(200,35,42,0.25);
+    cursor: default;
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.8rem;
+    color: var(--white);
+    cursor: pointer;
+    z-index: 1001;
+    line-height: 1;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    padding: 8px;
+  }
+
+  .lightbox-close:hover { color: var(--red); }
+
+  .lightbox-prev,
+  .lightbox-next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    color: var(--white);
+    cursor: pointer;
+    z-index: 1001;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    padding: 16px 20px;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1;
+  }
+
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
+
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  .lightbox-counter {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    z-index: 1001;
+  }
+
+  /* Gallery items show a zoom cursor */
+  .gallery-item {
+    cursor: zoom-in;
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .service-card.featured {
+      grid-column: span 1;
+      grid-template-columns: 1fr;
+    }
+    .service-card.featured img {
+      min-height: 200px;
+      max-height: 240px;
+    }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+    .materials-inner { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 20px; }
+    .our-work { padding: 70px 20px; }
+    .hero { padding: 100px 20px 120px; }
+    .hero-phone { right: 20px; bottom: 40px; }
+    .hero-phone a { font-size: 1.3rem; }
+    .territory { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    footer { flex-direction: column; text-align: center; }
+    .dump-starburst { width: 80px; top: 16px; right: 20px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ZEP'S<br><span>MATERIAL TRANSPORT</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#materials">Materials</a></li>
+    <li><a href="#work">Our Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:8454440544" class="nav-cta">Call Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img class="hero-bg-img" src="replanandnextsteps/1000026253.jpg" alt="Zep's Material Transport truck in action">
+    <div class="hero-bg-overlay"></div>
+  </div>
+  <div class="hero-tag">Kingston, NY // Ulster &amp; Dutchess Counties</div>
+  <h1>WE HAUL.<br>WE <span class="red">DELIVER.</span><br>WE GET IT DONE.</h1>
+  <p class="hero-sub">Local, reliable, and ready when you need us. One call and we'll figure out the rest.</p>
+  <p class="hero-services">Clean Outs &nbsp;—&nbsp; Dump Runs &nbsp;—&nbsp; Firewood &nbsp;—&nbsp; Sand &nbsp;—&nbsp; Stone &nbsp;—&nbsp; Mulch</p>
+  <div class="hero-actions">
+    <a href="tel:8454440544" class="btn-primary">Call 845-444-0544</a>
+    <a href="#services" class="btn-secondary">See What We Do</a>
+  </div>
+  <div class="hero-phone">
+    <div class="label">Call or Text</div>
+    <a href="tel:8454440544">845-444-0544</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Clean Outs</span>
+    <span class="ticker-item">Dump Runs</span>
+    <span class="ticker-item">Firewood</span>
+    <span class="ticker-item">Sand</span>
+    <span class="ticker-item">Stone</span>
+    <span class="ticker-item">Mulch</span>
+    <span class="ticker-item">Topsoil</span>
+    <span class="ticker-item">Brush Removal</span>
+    <span class="ticker-item">Snow Removal</span>
+    <span class="ticker-item">Trailer Rentals</span>
+    <span class="ticker-item">Clean Outs</span>
+    <span class="ticker-item">Dump Runs</span>
+    <span class="ticker-item">Firewood</span>
+    <span class="ticker-item">Sand</span>
+    <span class="ticker-item">Stone</span>
+    <span class="ticker-item">Mulch</span>
+    <span class="ticker-item">Topsoil</span>
+    <span class="ticker-item">Brush Removal</span>
+    <span class="ticker-item">Snow Removal</span>
+    <span class="ticker-item">Trailer Rentals</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Do</div>
+  <div class="section-title">SERVICES</div>
+  <div class="services-grid">
+
+    <div class="service-card fade-up">
+      <span class="service-icon">🗑️</span>
+      <h3>Clean Outs &amp; Dump Runs</h3>
+      <p>Got stuff you need gone? We load it, haul it, and dump it. Full property clean outs, junk removal, debris hauling — residential or commercial. Call and we'll figure it out.</p>
+    </div>
+
+    <div class="service-card fade-up">
+      <span class="service-icon">🪵</span>
+      <h3>Firewood Delivery</h3>
+      <p>Semi-seasoned split, 16" rounds, log length. Stacked or delivered loose. We've got what you need to keep the heat on all winter long.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">🚚</span>
+      <h3>Materials Delivery</h3>
+      <p>Stone, sand, mulch, topsoil and more — delivered right where you need it. Big loads or small, we make the run.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">❄️</span>
+      <h3>Snow Removal</h3>
+      <p>Sidewalks, driveways, commercial lots. When it snows, we show up. Don't get buried waiting on someone else.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">🌿</span>
+      <h3>Brush &amp; Leaf Removal</h3>
+      <p>End of season cleanups, storm debris, overgrown brush. We'll clear it out and haul it away so you don't have to deal with it.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">🚜</span>
+      <h3>Dump Trailer Rentals</h3>
+      <p>Need to do it yourself? Rent one of our dump trailers and handle it on your own schedule. Ask us about availability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRUCK BANNER DIVIDER -->
+<div class="truck-banner-divider">
+  <img src="replanandnextsteps/1000029300.jpg" alt="Zep's Material Transport — Clean Outs, Dump Runs, Firewood, Sand, Stone, Mulch">
+</div>
+
+<!-- MATERIALS -->
+<section class="materials" id="materials">
+  <div class="section-label">What We Carry</div>
+  <div class="section-title">MATERIALS</div>
+  <div class="materials-list">
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Firewood</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Sand</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Stone</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Mulch</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Topsoil / Loam</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Black Gold</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Compost</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Woodchips</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Gravel</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Stone: 1s &amp; 2s</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Stone Dust</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Pea Gravel</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Cobblestone</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Item 4</span></div>
+    <div class="material-item fade-up"><div class="material-dot"></div><span>Hay Bales</span></div>
+  </div>
+</section>
+
+<!-- DUMP RUNS CALLOUT -->
+<div class="dump-callout">
+  <img class="dump-starburst" src="replanandnextsteps/1000018237.jpg" alt="Dump Runs!">
+  <h2>GOT A LOAD THAT NEEDS TO GO?</h2>
+  <p>We do dump runs all week long. One call and we'll figure out the rest.</p>
+  <a href="tel:8454440544" class="btn-white">Call 845-444-0544</a>
+</div>
+
+<!-- OUR WORK / GALLERY -->
+<section class="our-work" id="work">
+  <div class="section-label">Real Work, Real Results</div>
+  <div class="section-title">OUR WORK</div>
+  <div class="gallery-grid">
+    <div class="gallery-item tall fade-up">
+      <img src="replanandnextsteps/1000026253.jpg" alt="Zep's dump truck hauling soil">
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="replanandnextsteps/1000020306.jpg" alt="Before and after clean out">
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="replanandnextsteps/1000028747.jpg" alt="Mulch and soil delivery">
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="replanandnextsteps/1000036790.jpg" alt="Zep's Material Transport truck">
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="replanandnextsteps/1000025610.jpg" alt="Scrap and recycling haul">
+    </div>
+  </div>
+</section>
+
+<!-- TERRITORY -->
+<section class="territory" id="territory">
+  <div class="territory-text fade-up">
+    <div class="section-label">Where We Work</div>
+    <div class="section-title">SERVING THE HUDSON VALLEY</div>
+    <p>Based in Kingston and running jobs all through Ulster and Dutchess Counties. If you're nearby, we can probably make it work. Give us a call and ask.</p>
+    <div class="territory-counties">
+      <div class="county">Ulster County</div>
+      <div class="county">Dutchess County</div>
+      <div class="county">Surrounding Areas</div>
+    </div>
+  </div>
+  <div class="territory-visual fade-up">
+    <div class="territory-big">ULSTER<br>&amp;<br>DUTCHESS</div>
+    <div class="territory-phone-big">
+      <div class="label">Call or Text Anytime</div>
+      <a href="tel:8454440544">845-444-0544</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Get in Touch</div>
+  <div class="section-title">LET'S TALK</div>
+  <div class="contact-grid">
+    <div class="contact-info fade-up">
+      <div class="contact-item">
+        <div class="label">Phone / Text</div>
+        <a href="tel:8454440544">845-444-0544</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Email</div>
+        <a href="mailto:zepsmaterialtransport@gmail.com">zepsmaterialtransport@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Instagram</div>
+        <a href="https://instagram.com/zepsmaterialtransport" target="_blank">@zepsmaterialtransport</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Based In</div>
+        <p>Kingston, NY</p>
+      </div>
+    </div>
+    <div class="contact-form fade-up">
+      <input type="text" placeholder="Your Name">
+      <input type="tel" placeholder="Phone Number">
+      <select>
+        <option value="" disabled selected>What Do You Need?</option>
+        <option>Clean Out</option>
+        <option>Dump Run</option>
+        <option>Firewood Delivery</option>
+        <option>Sand, Stone or Mulch Delivery</option>
+        <option>Materials Delivery</option>
+        <option>Snow Removal</option>
+        <option>Brush / Leaf Removal</option>
+        <option>Trailer Rental</option>
+        <option>Something Else</option>
+      </select>
+      <textarea placeholder="Tell us a little about what you need and where you're located."></textarea>
+      <button type="submit">Send It</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ZEP'S <span>MATERIAL TRANSPORT</span></div>
+  <p>Clean Outs — Dump Runs — Firewood — Sand — Stone — Mulch &nbsp;|&nbsp; Kingston, NY</p>
+  <div class="footer-ig"><a href="https://instagram.com/zepsmaterialtransport" target="_blank">@zepsmaterialtransport</a></div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">&#x2715;</button>
+  <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous">&#8592;</button>
+  <div class="lightbox-img-wrap">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <button class="lightbox-next" id="lightbox-next" aria-label="Next">&#8594;</button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Lightbox
+  const galleryItems = Array.from(document.querySelectorAll('.gallery-item img'));
+  const lightbox     = document.getElementById('lightbox');
+  const lbImg        = document.getElementById('lightbox-img');
+  const lbCounter    = document.getElementById('lightbox-counter');
+  let current = 0;
+
+  function openLightbox(index) {
+    current = index;
+    lbImg.src = galleryItems[current].src;
+    lbImg.alt = galleryItems[current].alt;
+    lbCounter.textContent = (current + 1) + ' / ' + galleryItems.length;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function showPrev() {
+    current = (current - 1 + galleryItems.length) % galleryItems.length;
+    lbImg.src = galleryItems[current].src;
+    lbImg.alt = galleryItems[current].alt;
+    lbCounter.textContent = (current + 1) + ' / ' + galleryItems.length;
+  }
+
+  function showNext() {
+    current = (current + 1) % galleryItems.length;
+    lbImg.src = galleryItems[current].src;
+    lbImg.alt = galleryItems[current].alt;
+    lbCounter.textContent = (current + 1) + ' / ' + galleryItems.length;
+  }
+
+  galleryItems.forEach((img, i) => {
+    img.parentElement.addEventListener('click', () => openLightbox(i));
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox-prev').addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+  document.getElementById('lightbox-next').addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+
+  // Click backdrop to close
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape')      closeLightbox();
+    if (e.key === 'ArrowLeft')   showPrev();
+    if (e.key === 'ArrowRight')  showNext();
+  });
+</script>
+
+</body>
+</html>
