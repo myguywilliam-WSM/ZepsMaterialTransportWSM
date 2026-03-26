@@ -284,7 +284,7 @@
   }
 
   .ticker-item::after {
-    content: 'â';
+    content: '&#8212;';
     color: rgba(255,255,255,0.5);
     font-weight: 400;
   }
@@ -946,7 +946,7 @@
   <div class="hero-tag">Kingston, NY // Ulster &amp; Dutchess Counties</div>
   <h1>WE HAUL.<br>WE <span class="red">DELIVER.</span><br>WE GET IT DONE.</h1>
   <p class="hero-sub">Local, reliable, and ready when you need us. One call and we'll figure out the rest.</p>
-  <p class="hero-services">Clean Outs &nbsp;â&nbsp; Dump Runs &nbsp;â&nbsp; Firewood &nbsp;â&nbsp; Sand &nbsp;â&nbsp; Stone &nbsp;â&nbsp; Mulch</p>
+  <p class="hero-services">Clean Outs &nbsp;&#8212;&nbsp; Dump Runs &nbsp;&#8212;&nbsp; Firewood &nbsp;&#8212;&nbsp; Sand &nbsp;&#8212;&nbsp; Stone &nbsp;&#8212;&nbsp; Mulch</p>
   <div class="hero-actions">
     <a href="tel:8454440544" class="btn-primary">Call 845-444-0544</a>
     <a href="#services" class="btn-secondary">See What We Do</a>
@@ -992,7 +992,7 @@
     <div class="service-card fade-up">
       <span class="service-icon">&#128465;&#65039;</span>
       <h3>Clean Outs &amp; Dump Runs</h3>
-      <p>Got stuff you need gone? We load it, haul it, and dump it. Full property clean outs, junk removal, debris hauling â residential or commercial. Call and we'll figure it out.</p>
+      <p>Got stuff you need gone? We load it, haul it, and dump it. Full property clean outs, junk removal, debris hauling &#8212; residential or commercial. Call and we'll figure it out.</p>
     </div>
 
     <div class="service-card fade-up">
@@ -1003,7 +1003,7 @@
     <div class="service-card fade-up">
       <span class="service-icon">&#128666;</span>
       <h3>Materials Delivery</h3>
-      <p>Stone, sand, mulch, topsoil and more â delivered right where you need it. Big loads or small, we make the run.</p>
+      <p>Stone, sand, mulch, topsoil and more &#8212; delivered right where you need it. Big loads or small, we make the run.</p>
     </div>
     <div class="service-card fade-up">
       <span class="service-icon">&#10052;&#65039;</span>
@@ -1025,7 +1025,7 @@
 
 <!-- TRUCK BANNER DIVIDER -->
 <div class="truck-banner-divider">
-  <img src="1000029300.jpg" alt="Zep's Material Transport â Clean Outs, Dump Runs, Firewood, Sand, Stone, Mulch">
+  <img src="1000029300.jpg" alt="Zep's Material Transport &#8212; Clean Outs, Dump Runs, Firewood, Sand, Stone, Mulch">
 </div>
 
 <!-- MATERIALS -->
@@ -1150,7 +1150,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">ZEP'S <span>MATERIAL TRANSPORT</span></div>
-  <p>Clean Outs â Dump Runs â Firewood â Sand â Stone â Mulch &nbsp;|&nbsp; Kingston, NY</p>
+  <p>Clean Outs &#8212; Dump Runs &#8212; Firewood &#8212; Sand &#8212; Stone &#8212; Mulch &nbsp;|&nbsp; Kingston, NY</p>
   <div class="footer-ig"><a href="https://instagram.com/zepsmaterialtransport" target="_blank">@zepsmaterialtransport</a></div>
 </footer>
 
@@ -1207,7 +1207,8 @@
 
   function showNext() {
     current = (current + 1) % galleryItems.length;
-       lbImg.alt = galleryItems[current].alt;
+    lbImg.src = galleryItems[current].src;
+    lbImg.alt = galleryItems[current].alt;
     lbCounter.textContent = (current + 1) + ' / ' + galleryItems.length;
   }
 
